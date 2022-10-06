@@ -1,0 +1,15 @@
+{
+  "include": ["src/"],
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es6",
+    "lib": ["DOM", "ES2015"],
+    "declaration": true,
+    "declarationDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
+  }
+}
