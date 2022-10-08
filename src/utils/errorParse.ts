@@ -10,7 +10,7 @@ function getLines(stack: string) {
     .join('^');
 }
 
-export const getJsError = (event: ErrorEvent): ReportErrorData => {
+export const parseJsError = (event: ErrorEvent): ReportErrorData => {
   let lastEvent = getLastEventEle(); // 获取到最后一个交互事件
   return {
     errorType: 'jsError', // js执行错误
@@ -22,7 +22,7 @@ export const getJsError = (event: ErrorEvent): ReportErrorData => {
   };
 };
 
-export const getSourceError = (event: ErrorEvent): ReportErrorData => {
+export const parseSourceError = (event: ErrorEvent): ReportErrorData => {
   const target = event.target as HTMLScriptElement & HTMLLinkElement;
   return {
     errorType: 'resourceError', // js执行错误
@@ -32,7 +32,7 @@ export const getSourceError = (event: ErrorEvent): ReportErrorData => {
   };
 };
 
-export const getPromiseError = (event: PromiseRejectionEvent): ReportErrorData => {
+export const parsePromiseError = (event: PromiseRejectionEvent): ReportErrorData => {
   const lastEvent = getLastEventEle();
   let message;
   let filename;

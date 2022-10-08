@@ -1,6 +1,10 @@
 import { ReportCommonData, ReportErrorData } from "../types/index"
 import userAgent from '../utils/userAgent'
 
+/**
+ * 获取需要发送的公共数据
+ * @returns 
+ */
 function getCommonData(): ReportCommonData {
     return {
         title: document.title,

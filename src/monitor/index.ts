@@ -1,10 +1,10 @@
-import { getJsError, getPromiseError, getSourceError } from "../utils/errorParse";
+import { parseJsError, parsePromiseError, parseSourceError } from "../utils/errorParse";
 import report from '../utils/report'
 
 function initJsMonitor() {
     // promise Error
     const unhandledrejection = (error: PromiseRejectionEvent) => {
-        report.send(getPromiseError(error))
+        report.send(parsePromiseError(error))
     }
     window.addEventListener("unhandledrejection", unhandledrejection);
 
@@ -13,10 +13,10 @@ function initJsMonitor() {
         console.log(error);
         // js 异常
         if(error.cancelable) {
-            report.send(getJsError(error))
+            report.send(parseJsError(error))
         } else {
             // 资源加载异常
-            report.send(getSourceError(error))
+            report.send(parseSourceError(error))
         }
     }
     window.addEventListener("error", errorEvent, true);
