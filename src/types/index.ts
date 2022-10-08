@@ -9,13 +9,11 @@ export type MonitorConfig = {
 //     resourceError: boolean
 // }
 
-export type MonitorMode = 'test' | 'release'
-
 export type MonitorOptions = {
     target: string
     appId: string
     // 测试模式和运行模式，测试模式不会将数据传输到服务器，仅仅提供打印查看
-    mode: MonitorMode
+    debug: boolean
     config: MonitorConfig
 }
 
