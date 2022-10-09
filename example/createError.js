@@ -1,13 +1,18 @@
 
 // ----- ajax请求错误 ---- 
 
+var fetchError = document.getElementsByClassName("err-fetch-request")[0];
+fetchError.onclick = function () {
+    fetch('/fetchError')
+}
+
 // ajax请求错误
 var ajaxRequestError = document.getElementsByClassName("err-ajax-request")[0];
 ajaxRequestError.onclick = function () {
   var xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
   xhr.timeout = 3000;
-  xhr.open("get", '/ajaxerror', true);
+  xhr.open("get", '/ajaxerror?p=1&t=2', true);
   xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
   xhr.setRequestHeader("Accept", "application/json");
   xhr.send();
@@ -19,10 +24,10 @@ servererrAjax.onclick = function () {
   var xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
   xhr.timeout = 3000;
-  xhr.open("get", '/servererr', true);
+  xhr.open("post", '/servererr', true);
   xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
   xhr.setRequestHeader("Accept", "application/json");
-  xhr.send();
+  xhr.send({a: 1, b: 2});
 }
 
 // ajax失败

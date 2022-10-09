@@ -2,6 +2,7 @@ export type MonitorConfig = {
     userOnline: boolean
     performance: boolean
     jsError: boolean
+    request: boolean
 }
 
 // 需要监控js运行时的报错
@@ -27,8 +28,8 @@ export type ReportCommonData = {
 }
 // experience 体验  stability 稳定性  business 业务指标
 export type ReportErrorKind = 'experience' | 'stability' | 'business'
-// error 错误 custom 自定义上报 timing 性能
-export type ReportErrorType = 'timing' | 'error' | 'custom'
+// error 错误 custom 自定义上报 timing 性能 request 请求
+export type ReportErrorType = 'timing' | 'error' | 'custom' | 'request'
 
 export type ReportJsError = {
     errorType?: string
@@ -39,6 +40,15 @@ export type ReportJsError = {
     stack?: string
     selector?: string
     extra?: string
+    // 请求状态
+    status?: string
+    // 请求路径
+    pathname?: string
+    // 请求持续时长
+    duration?: number
+    // 请求响应
+    response?: string
+    params?: any
 }
 
 export type ReportPerformance = {

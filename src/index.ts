@@ -3,11 +3,13 @@ import { getObjectValue, getObjectValueByPath } from './utils/common';
 import initJsMonitor from './monitor/index';
 import initPerformance from './performance';
 import report from './utils/report';
+import initRequest from './request';
 
 class Monitor {
   public watchPerformance: boolean;
   public watchUserOnline: boolean;
   public watchJsError: boolean;
+  public watchRequest: boolean;
   public debug: boolean;
   public config: object;
   constructor() {
@@ -19,6 +21,8 @@ class Monitor {
     this.watchUserOnline = true;
     // 是否监控性能指标
     this.watchPerformance = true;
+    // 初始化监听请求
+    this.watchRequest = true;
     // 初始化配置
     this.config = Object.create(null);
   }
@@ -34,6 +38,9 @@ class Monitor {
 
     // 性能监听
     this.watchPerformance && initPerformance();
+
+    // 监听请求
+    this.watchRequest && initRequest();
   }
 
   /**
@@ -59,6 +66,8 @@ class Monitor {
       userOnline !== undefined && (this.watchJsError = !!userOnline);
       const performance = getObjectValueByPath(config, 'config.performance');
       performance !== undefined && (this.watchPerformance = !!performance);
+      const request = getObjectValueByPath(config, 'config.request');
+      request !== undefined && (this.watchRequest = !!request);
       resolve(true);
     });
   }
