@@ -13,6 +13,8 @@ function getLines(stack: string) {
 export const parseJsError = (event: ErrorEvent): ReportErrorData => {
   let lastEvent = getLastEventEle(); // 获取到最后一个交互事件
   return {
+    kind: "stability", // 监控指标的大类，稳定性
+    type: "error", // 小类型，这是一个错误
     errorType: 'jsError', // js执行错误
     message: event.message, // 报错信息
     filename: event.filename, // 哪个文件报错了
@@ -25,6 +27,8 @@ export const parseJsError = (event: ErrorEvent): ReportErrorData => {
 export const parseSourceError = (event: ErrorEvent): ReportErrorData => {
   const target = event.target as HTMLScriptElement & HTMLLinkElement;
   return {
+    kind: "stability", // 监控指标的大类，稳定性
+    type: "error", // 小类型，这是一个错误
     errorType: 'resourceError', // js执行错误
     filename: target.src || target.href, // 哪个文件报错了
     tagName: target.tagName,
@@ -53,6 +57,8 @@ export const parsePromiseError = (event: PromiseRejectionEvent): ReportErrorData
     stack = getLines(reason.stack);
   }
   return {
+    kind: "stability", // 监控指标的大类，稳定性
+    type: "error", // 小类型，这是一个错误
     errorType: 'promiseError', // js执行错误
     message, // 报错信息
     filename, // 哪个文件报错了

@@ -1,6 +1,7 @@
 import { MonitorOptions } from './types/index';
 import { getObjectValue, getObjectValueByPath } from './utils/common';
 import initJsMonitor from './monitor/index';
+import initPerformance from './performance'
 
 class Monitor {
   public watchPerformance: boolean;
@@ -28,25 +29,24 @@ class Monitor {
         this.errorLogMsg(error)
     }
 
-    // 初始化JS监听
-    // 初始化Promise
-    // 初始化资源加载监听
+    
     this.watchJsError && initJsMonitor()
 
     // 性能监听
-    
+    this.watchPerformance && initPerformance.init()
   }
 
   validateConfig(config: MonitorOptions) {
     return new Promise((resolve, reject) => {
-        if(!config) return reject('Error: 未传入初始化参数')
+        if(!config || !Object.keys(config).length) return reject('未传入初始化参数')
         this.config = config;
         const debug = getObjectValue(config, 'debug')
         // 验证mode
         if(typeof debug === 'boolean') {
             this.debug = debug
         } else {
-            console.log('SDK Info: SDK默认采用debug模式')
+            this.debug = true
+            this.debugLogMsg('SDK默认采用debug模式')
         }
         const jsError = getObjectValueByPath(config, 'config.jsError');
         jsError !== undefined && (this.watchJsError = !!jsError);
@@ -58,12 +58,20 @@ class Monitor {
     })
   }
 
+  /**
+   * SDK系统报错打印
+   * @param args 
+   */
   errorLogMsg(...args: any[]) {
-    console.error(...args)
+    console.log('%cSDK Error:%c '+args.join(' '), 'background: red;color: white;', '')
   }
 
+  /**
+   * SDK系统Debug日志
+   * @param args 
+   */
   debugLogMsg(...args: any[]) {
-    if(this.debug) console.log(...args)
+    if(this.debug) console.log('%cSDK Debug:%c '+args.join(' '), 'background: blue;color: white;', '')
   }
 }
 
