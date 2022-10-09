@@ -27,7 +27,8 @@ export type ReportCommonData = {
 }
 // experience 体验  stability 稳定性  business 业务指标
 export type ReportErrorKind = 'experience' | 'stability' | 'business'
-export type ReportErrorType = 'timing' | 'error'
+// error 错误 custom 自定义上报 timing 性能
+export type ReportErrorType = 'timing' | 'error' | 'custom'
 
 export type ReportJsError = {
     errorType?: string
@@ -37,6 +38,7 @@ export type ReportJsError = {
     position?: string
     stack?: string
     selector?: string
+    extra?: string
 }
 
 export type ReportPerformance = {
@@ -69,3 +71,11 @@ export type ReportErrorData = MergeObj<{
     kind?: ReportErrorKind
     type?: ReportErrorType
 } & ReportJsError & Partial<ReportPerformance>>
+
+
+export type ActiveReportError = {
+    kind: 'business',
+    type: 'custom',
+    message: string
+    extra: {[p: string]: any}
+}

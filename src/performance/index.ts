@@ -13,7 +13,7 @@ const supported = {
 /**
  * 初始化性能监听
  */
-function init() {
+function initPerformance() {
   monitorSdk.debugLogMsg('SDK Debug: 初始化性能监听');
   if (document.readyState === 'complete') {
     if (supported.performance) observeNavigationTiming()
@@ -41,7 +41,6 @@ function observeNavigationTiming() {
     requestStart,
     responseStart,
     responseEnd,
-    domLoading,
     domInteractive,
     domainLookupEnd,
     domContentLoadedEventStart,
@@ -74,6 +73,4 @@ function observeNavigationTiming() {
     return e;
   }
 
-export default {
-  init,
-};
+export default initPerformance;
