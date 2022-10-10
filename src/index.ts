@@ -1,9 +1,9 @@
 import { ActiveReportError, MonitorOptions } from './types/index';
 import { getObjectValue, getObjectValueByPath } from './utils/common';
-import initJsMonitor from './monitor/index';
+import {initJsMonitor, cancelJsMonitor} from './monitor/index';
 import initPerformance from './performance';
 import report from './utils/report';
-import initRequest from './request';
+import { initRequest, cancelRequest } from './request';
 
 class Monitor {
   public watchPerformance: boolean;
@@ -16,13 +16,13 @@ class Monitor {
     // 当前SDK的模式
     this.debug = false;
     // 是否监控JS错误
-    this.watchJsError = true;
+    this.watchJsError = false;
     // 是否监控用户在线时长
-    this.watchUserOnline = true;
+    this.watchUserOnline = false;
     // 是否监控性能指标
-    this.watchPerformance = true;
+    this.watchPerformance = false;
     // 初始化监听请求
-    this.watchRequest = true;
+    this.watchRequest = false;
     // 初始化配置
     this.config = Object.create(null);
   }
@@ -106,7 +106,7 @@ class Monitor {
    * @param args
    */
   waringLogMsg(...args: any[]) {
-    console.log('%cSDK Waring:%c ' + args.join(' '), 'background: yellow;color: white;', '');
+    console.log('%cSDK Waring:%c ' + args.join(' '), 'background: orange;color: white;', '');
   }
 
   /**
@@ -116,6 +116,15 @@ class Monitor {
   debugLogMsg(...args: any[]) {
     if (this.debug)
       console.log('%cSDK Debug:%c ' + args.join(' '), 'background: blue;color: white;', '');
+  }
+
+  /**
+   * 卸载实例，取消监控
+   */
+  destory() {
+    (window as any).monitorSdk = null;
+    this.watchJsError && cancelJsMonitor();
+    this.watchRequest && cancelRequest();
   }
 }
 

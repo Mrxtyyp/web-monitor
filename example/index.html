@@ -53,7 +53,7 @@
   <button class="err-js-load">没有加载javascript</button>
   <button class="err-css-load">没有加载css</button>
   <button class="err-image-load">没有加载image</button>
-  <button class="err-iframe-load">没有加载iframe</button>
+  <button type="button" class="err-iframe-load">没有加载iframe</button>
   <hr>
 
   <!-- 第三方资源错误 -->
@@ -78,9 +78,14 @@
   <script type="module">
     import monitorSdk from '../dist/index.esm.js'
     var config = {
-      https: false,
-      post: false,
-      url: "localhost:4000/error"
+      target: "localhost:4000/error",
+      debug: true,
+      config: {
+        userOnline: true,
+        performance: true,
+        jsError: true,
+        request: true
+      }
     };
 
     console.log(monitorSdk);

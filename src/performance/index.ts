@@ -14,7 +14,7 @@ const supported = {
  * 初始化性能监听
  */
 function initPerformance() {
-  monitorSdk.debugLogMsg('SDK Debug: 初始化性能监听');
+  monitorSdk.debugLogMsg('初始化性能监听');
   if (document.readyState === 'complete') {
     if (supported.performance) observeNavigationTiming()
   } else {

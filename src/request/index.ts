@@ -1,17 +1,19 @@
 import monitorSdk from "..";
 import report from "../utils/report";
 
-function initRequest() {
-    monitorSdk.debugLogMsg('SDK Debug: 初始化Request监听')
+export function initRequest() {
+    monitorSdk.debugLogMsg('初始化Request监听')
     rewriteAjax()
     rewriteFetch()
 }
+
+const ajaxSend = XMLHttpRequest.prototype.send;
+const ajaxOpen = XMLHttpRequest.prototype.open;
 
 /**
  * 重写Ajax
  */
 function rewriteAjax() {
-    const { open, send } = XMLHttpRequest.prototype;
     const _config = {
         src: '',
         method: '',
@@ -23,7 +25,7 @@ function rewriteAjax() {
     XMLHttpRequest.prototype.open = function(method: string, url: string) {
       _config.method = method;
       _config.src = url as string;
-      return open.call(this, method, url, true);
+      return ajaxOpen.call(this, method, url, true);
     };
   
     // 劫持 send方法
@@ -70,15 +72,16 @@ function rewriteAjax() {
       this.addEventListener("error", handler, false);
       this.addEventListener("abort", handler, false);
   
-      return send.call(this, body);
+      return ajaxSend.call(this, body);
     };
 }
 
+const nativeFetch = window.fetch;
 /**
  * 重写Fetch异常监控
  */
 function rewriteFetch() {
-    const nativeFetch = window.fetch;
+    
     if (nativeFetch) {
       window.fetch = function traceFetch(target, options = {}) {
         const fetchStart = Date.now();
@@ -119,4 +122,12 @@ function rewriteFetch() {
     }
 }
 
-export default initRequest;
+/**
+ * 取消Request监听
+ */
+ export const cancelRequest = () => {
+    monitorSdk.waringLogMsg('取消request监听器')
+    window.fetch = nativeFetch;
+    XMLHttpRequest.prototype.open = ajaxOpen;
+    XMLHttpRequest.prototype.send = ajaxSend;
+}

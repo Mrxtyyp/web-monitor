@@ -101,7 +101,7 @@ imageload.onclick = function () {
 var iframeload = document.getElementsByClassName("err-iframe-load")[0];
 iframeload.onclick = function () {
   var iframe = document.createElement("iframe");
-  iframe.src = `./js/undefied.html`;
+  iframe.src = `http://47.109.52.30:8082/v1/sys/config`;
   document.body.appendChild(iframe);
 }
 
@@ -116,5 +116,5 @@ resourceError.onclick = function () {
 // ------ 销毁实例 ------
 var destory = document.getElementsByClassName("destory")[0];
 destory.onclick = function () {
-  window.monitor._destory();
+  window.monitorSdk.destory();
 }
