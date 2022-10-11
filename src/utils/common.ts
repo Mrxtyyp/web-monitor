@@ -1,3 +1,4 @@
+import { SDK_DIVICE_ID } from "../constant";
 import { MonitorConfig } from "../types/index";
 
 type CommonObj = {
@@ -49,7 +50,7 @@ export function getObjectValueByPath<T extends object, K extends string>(obj: T,
         result.push('');
       }
       str.replace(rePropName, function(match, number, quote, subString) {
-        const v = quote ? subString.replace(reEscapeChar, '$1') : (number || match)
+        const v: string = quote ? subString.replace(reEscapeChar, '$1') : (number || match)
         result.push(v);
         return v
       });
@@ -79,4 +80,66 @@ function objectFindValue<T extends Record<string, any>>(obj: T, ...args: string[
         obj = obj[args[index++]];
     }
     return (index && index == length) ? obj : undefined;
+}
+
+/**
+ * 生成字符串的hash
+ * via https://stackoverflow.com/a/7616484/4197333
+ * @param {*} content
+ */
+ export function hash(content: string) {
+    content = content + "";
+    let hash = 0;
+    let index = 0;
+    let charCodeAt = 0;
+    if (content.length === 0) {
+        return hash.toString(36);
+    }
+    for (index = 0; index < content.length; index++) {
+        // 每一位字符的utf-8编码
+        charCodeAt = content.charCodeAt(index);
+        hash = (hash << 5) - hash + charCodeAt;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash.toString(36);
+}
+
+// 生成UUID
+export function getUuid() {
+    var time = new Date();
+    let timestampMs: any = (time as any) * 1;
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(36)
+            .substring(1);
+    }
+    return (
+        hash(timestampMs + "") +
+        "-" +
+        hash(navigator.userAgent) +
+        "-" +
+        s4() +
+        s4() +
+        s4() +
+        s4() +
+        s4() +
+        "-" +
+        s4() +
+        s4() +
+        s4()
+    );
+}
+
+/**
+ * 获取设备ID
+ * @returns 
+ */
+export function getDeviceId() {
+    let deviceId = localStorage.getItem(SDK_DIVICE_ID);
+    if (deviceId === null || deviceId === undefined) {
+        // cookie中也没有, 手工设置上
+        deviceId = getUuid();
+        localStorage.setItem(SDK_DIVICE_ID, deviceId)
+    }
+    return deviceId;
 }

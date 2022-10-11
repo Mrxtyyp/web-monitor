@@ -1,5 +1,5 @@
 import { ActiveReportError, MonitorOptions } from './types/index';
-import { getObjectValue, getObjectValueByPath } from './utils/common';
+import { getObjectValue, getObjectValueByPath, getDeviceId } from './utils/common';
 import {initJsMonitor, cancelJsMonitor} from './monitor/index';
 import initPerformance from './performance';
 import report from './utils/report';
@@ -11,7 +11,7 @@ class Monitor {
   public watchJsError: boolean;
   public watchRequest: boolean;
   public debug: boolean;
-  public config: object;
+  public config: Record<string, any>;
   constructor() {
     // 当前SDK的模式
     this.debug = false;
@@ -33,6 +33,8 @@ class Monitor {
     } catch (error) {
       this.errorLogMsg(error);
     }
+
+    this.config.deviceId = getDeviceId();
 
     this.watchJsError && initJsMonitor();
 
@@ -91,6 +93,13 @@ class Monitor {
         message: options.message,
         extra: options.extra ? JSON.stringify(options.extra) : ''
     })
+  }
+
+  /**
+   * 设置用户唯一标识
+   */
+  setUId(uid: string) {
+    this.config.userId = uid;
   }
 
   /**

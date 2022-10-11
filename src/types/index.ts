@@ -13,6 +13,8 @@ export type MonitorConfig = {
 export type MonitorOptions = {
     target: string
     appId: string
+    // 用户唯一标识
+    userId: string
     // 测试模式和运行模式，测试模式不会将数据传输到服务器，仅仅提供打印查看
     debug: boolean
     config: MonitorConfig
@@ -25,6 +27,10 @@ export type ReportCommonData = {
     timestamp: number,
     userAgent: string,
     ip?: string
+    // 匹配唯一设备
+    d_id?: string
+    // 匹配用户新增
+    u_id?: string
 }
 // experience 体验  stability 稳定性  business 业务指标
 export type ReportErrorKind = 'experience' | 'stability' | 'business'
