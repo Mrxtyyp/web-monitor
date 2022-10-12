@@ -1,5 +1,5 @@
-import monitorSdk from "..";
-import report from "../utils/report";
+import monitorSdk from "../..";
+import report from "../../utils/report";
 
 export function initRequest() {
     monitorSdk.debugLogMsg('初始化Request监听')

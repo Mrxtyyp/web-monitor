@@ -1,9 +1,9 @@
 import { ActiveReportError, MonitorOptions } from './types/index';
 import { getObjectValue, getObjectValueByPath, getDeviceId } from './utils/common';
-import {initJsMonitor, cancelJsMonitor} from './monitor/index';
-import initPerformance from './performance';
+import {initJsMonitor, cancelJsMonitor} from './lib/monitor/index';
+import initPerformance from './lib/performance';
 import report from './utils/report';
-import { initRequest, cancelRequest } from './request';
+import { initRequest, cancelRequest } from './lib/request';
 
 class Monitor {
   public watchPerformance: boolean;

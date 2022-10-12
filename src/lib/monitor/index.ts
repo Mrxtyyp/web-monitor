@@ -1,6 +1,6 @@
-import monitorSdk from "..";
-import { parseJsError, parsePromiseError, parseSourceError } from "../utils/errorParse";
-import report from '../utils/report'
+import monitorSdk from "../..";
+import { parseJsError, parsePromiseError, parseSourceError } from "../../utils/errorParse";
+import report from '../../utils/report'
 
 
 // promise Error
