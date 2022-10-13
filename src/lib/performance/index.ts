@@ -1,5 +1,5 @@
-import monitorSdk from '..';
-import report from '../utils/report';
+import monitorSdk from '../..';
+import report from '../../utils/report';
 
 // 兼容判断
 const supported = {

@@ -3,6 +3,9 @@ export type MonitorConfig = {
     performance: boolean
     jsError: boolean
     request: boolean
+    pv: boolean
+    // 是否监听路由hash改变
+    pvHash: boolean
 }
 
 // 需要监控js运行时的报错
@@ -22,10 +25,11 @@ export type MonitorOptions = {
 
 // 报告的公共数据
 export type ReportCommonData = {
-    title: string,
-    url: string,
-    timestamp: number,
-    userAgent: string,
+    title: string
+    url: string
+    timestamp: number
+    userAgent: string
+    referer?: string
     ip?: string
     // 匹配唯一设备
     d_id?: string
@@ -35,7 +39,7 @@ export type ReportCommonData = {
 // experience 体验  stability 稳定性  business 业务指标
 export type ReportErrorKind = 'experience' | 'stability' | 'business'
 // error 错误 custom 自定义上报 timing 性能 request 请求
-export type ReportErrorType = 'timing' | 'error' | 'custom' | 'request'
+export type ReportErrorType = 'timing' | 'error' | 'custom' | 'request' | 'pv'
 
 export type ReportJsError = {
     errorType?: string
@@ -55,6 +59,7 @@ export type ReportJsError = {
     // 请求响应
     response?: string
     params?: any
+    action?: string
 }
 
 export type ReportPerformance = {
@@ -86,7 +91,7 @@ type MergeObj<T extends object> = {
 export type ReportErrorData = MergeObj<{
     kind?: ReportErrorKind
     type?: ReportErrorType
-} & ReportJsError & Partial<ReportPerformance>>
+} & ReportJsError & Partial<ReportPerformance> & Partial<ReportCommonData>>
 
 
 export type ActiveReportError = {

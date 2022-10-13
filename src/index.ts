@@ -4,12 +4,15 @@ import {initJsMonitor, cancelJsMonitor} from './lib/monitor/index';
 import initPerformance from './lib/performance';
 import report from './utils/report';
 import { initRequest, cancelRequest } from './lib/request';
+import initHistory from './lib/history/index';
 
 class Monitor {
   public watchPerformance: boolean;
   public watchUserOnline: boolean;
   public watchJsError: boolean;
   public watchRequest: boolean;
+  public watchPv: boolean;
+  public watchPvHash: boolean;
   public debug: boolean;
   public config: Record<string, any>;
   constructor() {
@@ -23,6 +26,10 @@ class Monitor {
     this.watchPerformance = false;
     // 初始化监听请求
     this.watchRequest = false;
+    // 监听统计PV
+    this.watchPv = true;
+    // 监听路由变化统计PV
+    this.watchPvHash = true;
     // 初始化配置
     this.config = Object.create(null);
   }
@@ -43,6 +50,9 @@ class Monitor {
 
     // 监听请求
     this.watchRequest && initRequest();
+
+    // 监听页面PV
+    this.watchPv && initHistory(this.watchPvHash);
   }
 
   /**
@@ -70,6 +80,10 @@ class Monitor {
       performance !== undefined && (this.watchPerformance = !!performance);
       const request = getObjectValueByPath(config, 'config.request');
       request !== undefined && (this.watchRequest = !!request);
+      const pv = getObjectValueByPath(config, 'config.pv');
+      pv !== undefined && (this.watchPv = !!pv);
+      const pvHash = getObjectValueByPath(config, 'config.pvHash');
+      pvHash !== undefined && (this.watchPvHash = !!pvHash);
       resolve(true);
     });
   }
