@@ -8,17 +8,12 @@ export type MonitorConfig = {
     pvHash: boolean
 }
 
-// 需要监控js运行时的报错
-// export type MonitorJsConfig = {
-//     resourceError: boolean
-// }
-
 export type MonitorOptions = {
     target: string
     appId: string
     // 用户唯一标识
     userId: string
-    // 测试模式和运行模式，测试模式不会将数据传输到服务器，仅仅提供打印查看
+    // 是否开启debug模式
     debug: boolean
     config: MonitorConfig
 }

@@ -53,7 +53,6 @@
   <button class="err-js-load">没有加载javascript</button>
   <button class="err-css-load">没有加载css</button>
   <button class="err-image-load">没有加载image</button>
-  <button type="button" class="err-iframe-load">没有加载iframe</button>
   <hr>
 
   <!-- 第三方资源错误 -->
@@ -67,13 +66,6 @@
   <hr>
 
 
-  <!-- rrweb 重播 -->
-  <p>rrweb 重播</p>
-  <button class="rrweb">rrweb 重播</button>
-  <hr>
-
-  <!-- 注意这里必须加 crossorigin="anonymous" 否则在引入的时候会因为是第三方资源无法收集完整报错信息 -->
-  <!-- <script crossorigin="anonymous" src="../dist/index.esm.js"></script> -->
   <script src="./createError.js"></script>
   <script type="module">
     import monitorSdk from '../dist/index.esm.js'

@@ -98,14 +98,6 @@ imageload.onclick = function () {
   document.body.appendChild(img);
 }
 
-var iframeload = document.getElementsByClassName("err-iframe-load")[0];
-iframeload.onclick = function () {
-  var iframe = document.createElement("iframe");
-  iframe.src = `http://47.109.52.30:8082/v1/sys/config`;
-  document.body.appendChild(iframe);
-}
-
-
 // ------ 第三方资源错误 ------
 var resourceError = document.getElementsByClassName("other-resource-error")[0];
 resourceError.onclick = function () {

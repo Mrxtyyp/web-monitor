@@ -38,7 +38,7 @@ const send = (data: ReportErrorData) => {
         ...data
     });
 
-    sendReport(monitorSdk.config.target, {
+    monitorSdk.config.target && sendReport(monitorSdk.config.target, {
         ...common,
         ...data
     })
