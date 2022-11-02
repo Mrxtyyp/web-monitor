@@ -7,3 +7,7 @@
 - [x] 路由监控：PV、hash监控
 - [x] 数据上报：image和URL方式
 - [x] 自定义数据上报
+
+## 命令
+  * yarn dev
+  * yarn build
