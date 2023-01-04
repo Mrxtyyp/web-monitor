@@ -1,10 +1,11 @@
 import { ActiveReportError, MonitorOptions } from './types/index';
 import { getObjectValue, getObjectValueByPath, getDeviceId } from './utils/common';
-import {initJsMonitor, cancelJsMonitor} from './lib/monitor/index';
+import { initJsMonitor, cancelJsMonitor } from './lib/monitor/index';
 import initPerformance from './lib/performance';
 import report from './utils/report';
 import { initRequest, cancelRequest } from './lib/request';
 import initHistory from './lib/history/index';
+import initUV from './lib/uv';
 
 class Monitor {
   public watchPerformance: boolean;
@@ -53,6 +54,9 @@ class Monitor {
 
     // 监听页面PV
     this.watchPv && initHistory(this.watchPvHash);
+
+    // 监听用户在线时长
+    this.watchUserOnline && initUV();
   }
 
   /**
@@ -90,7 +94,7 @@ class Monitor {
 
   /**
    * 主动上报监控信息
-   * @param options 
+   * @param options
    * @param options.message 错误描述，文字不超过200个，超过后会截取
    * @param options.extra 自定义附加字段，会转成字符串存储
    */
@@ -102,11 +106,11 @@ class Monitor {
     }
 
     report.send({
-        kind: 'business',
-        type: 'custom',
-        message: options.message,
-        extra: options.extra ? JSON.stringify(options.extra) : ''
-    })
+      kind: 'business',
+      type: 'custom',
+      message: options.message,
+      extra: options.extra ? JSON.stringify(options.extra) : '',
+    });
   }
 
   /**
